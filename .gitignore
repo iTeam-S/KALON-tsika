@@ -2,4 +2,4 @@
 __pycache__/
 
 # Environments
-env.bat
+.env.bat
