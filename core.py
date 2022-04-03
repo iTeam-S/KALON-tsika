@@ -8,6 +8,9 @@ chat = bot.chat
 
 @ampalibe.command('/')
 def main(sender_id, cmd, **extends):
+    #----------------------------*$*---------------------------------------#
+    #                    Greeting ang giving the first menu        
+    #-----------------------------*$*--------------------------------------#
     chat.send_message(sender_id,"Bonjour, bienvenu sur mon espace privée!!")
     quick_rep = [
         {

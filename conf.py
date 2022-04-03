@@ -9,16 +9,23 @@ class Configuration:
     ADAPTER = env.get('ADAPTER')
 
     DB_FILE = env.get('DB_FILE')
+
+
+
+    DATABASE=
+    {
+        DB_HOST = env.get('DB_HOST', 'localhost')
+        DB_USER = env.get('DB_USER', 'root')
+        DB_PASSWORD = env.get('DB_PASSWORD', '')
+        DB_PORT = env.get('DB_PORT', 3306)
+        DB_NAME = env.get('DB_NAME')
+    }
     
-    DB_HOST = env.get('DB_HOST', 'localhost')
-    DB_USER = env.get('DB_USER', 'root')
-    DB_PASSWORD = env.get('DB_PASSWORD', '')
-    DB_PORT = env.get('DB_PORT', 3306)
-    DB_NAME = env.get('DB_NAME')
 
     ACCESS_TOKEN = env.get('AMP_ACCESS_TOKEN')
     VERIF_TOKEN = env.get('AMP_VERIF_TOKEN')
 
+    
     APP_HOST = env.get('AMP_HOST')
     APP_PORT = int(env.get('AMP_PORT'))
     APP_URL = env.get('AMP_URL')
