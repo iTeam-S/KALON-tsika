@@ -2,5 +2,9 @@
 __pycache__/
 
 # Environments
+<<<<<<< HEAD
 
 .env.bat
+=======
+.env.bat
+>>>>>>> 4688e81543788ca4021777f1089aeb926b8fdf78
