@@ -14,7 +14,7 @@ class Requete:
     self.db = mysql.connector.connect(**DATABASE)
     self.cursor = self.db.cursor()
 
-  def verif_db(fonction):
+  def verif_db(function):
     '''Vérification de la connexion'''
     def verif_connex(*arg, **kwarg):
       if not arg[0].db.is_connected:
@@ -22,7 +22,7 @@ class Requete:
           arg[0].db.reconnect()
         except Exception:
           arg[0].__connect()
-      return fonction(*arg, **kwarg)
+      return function(*arg, **kwarg)
     return verif_connex
         
   @verif_db
