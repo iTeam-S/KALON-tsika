@@ -23,20 +23,11 @@ class Configuration:
     # }
     
 
-    DATABASE ={
-        'host' : 'localhost',
-        'user':'root',
-        'password':'',
-        'port':3306,
-        'database':'kalontsika'
-    }
 
 
     # ACCESS_TOKEN = env.get('AMP_ACCESS_TOKEN')
     # VERIF_TOKEN = env.get('AMP_VERIF_TOKEN')
 
-    ACCESS_TOKEN ='EAAKHlnGZCLx4BAIGCcZBTgodBhboNFAdySv73TbLrrnZAtiSg2Xn2FwTjwaREzwQV9106Gvryd0b0vwFrhahQVA9DRdlxRuAKP6ji8xNloQYqryad2K4aHQL9gSKY3QMRMbOqiLP9Wnjl47xVUjkfwPiBcVyXKp3p3SQTyzcZB1PhMd86Hg5'
-    VERIF_TOKEN = 'KALOAPP'
 
     APP_HOST = env.get('AMP_HOST')
     APP_PORT = int(env.get('AMP_PORT'))
