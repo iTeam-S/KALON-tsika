@@ -3,8 +3,12 @@ __pycache__/
 
 # Environments
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 .env.bat
+=======
+.env.bat
+>>>>>>> 4688e81543788ca4021777f1089aeb926b8fdf78
 =======
 .env.bat
 >>>>>>> 4688e81543788ca4021777f1089aeb926b8fdf78
