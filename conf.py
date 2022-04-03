@@ -13,20 +13,20 @@ class Configuration:
 
 
 
-    # DATABASE=
-    # {
-    #     DB_HOST = env.get('DB_HOST', 'localhost')
-    #     DB_USER = env.get('DB_USER', 'root')
-    #     DB_PASSWORD = env.get('DB_PASSWORD', '')
-    #     DB_PORT = env.get('DB_PORT', 3306)
-    #     DB_NAME = env.get('DB_NAME')
-    # }
+    DATABASE=
+    {
+        DB_HOST = env.get('DB_HOST', 'localhost')
+        DB_USER = env.get('DB_USER', 'root')
+        DB_PASSWORD = env.get('DB_PASSWORD', '')
+        DB_PORT = env.get('DB_PORT', 3306)
+        DB_NAME = env.get('DB_NAME')
+    }
     
 
 
 
-    # ACCESS_TOKEN = env.get('AMP_ACCESS_TOKEN')
-    # VERIF_TOKEN = env.get('AMP_VERIF_TOKEN')
+    ACCESS_TOKEN = env.get('AMP_ACCESS_TOKEN')
+    VERIF_TOKEN = env.get('AMP_VERIF_TOKEN')
 
 
     APP_HOST = env.get('AMP_HOST')
