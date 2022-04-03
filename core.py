@@ -1,9 +1,11 @@
 import ampalibe
 from conf import Configuration
 from ampalibe import Payload
+from test import Requete
 
 bot = ampalibe.init(Configuration())
 chat = bot.chat
+req = Requete(Configuration())
 
 
 @ampalibe.command('/')
