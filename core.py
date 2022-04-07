@@ -32,14 +32,14 @@ def main(sender_id, cmd, **extends):
 
 def Music_lists(self):
     #----------------------------*$*---------------------------------------#
-    #                    Fetching all data from our database        
+    #                    Fetching music data from our database        
     #-----------------------------*$*--------------------------------------#
     self.data = req.list_music()
     musics=[]
     i=0
     while i<len(self.data):
         musics.append({
-            "title":str(self.data[i][0]+ "-" + self.data.[i][1]),
+            "title":str(self.data[i][0]+ "-" + self.data[i][1]),
             "image_url":self.data[i][2],
             "subtitle":"Artiste:" + str(self.data[i][3]),
             "buttons":[
@@ -57,3 +57,4 @@ def Music_lists(self):
         })
         i+=1
     return musics
+
