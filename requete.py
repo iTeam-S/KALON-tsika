@@ -56,9 +56,9 @@ class Requete (Model):
 
   @Model.verif_db
   def list_tournee(self, id_artiste):
-      """
-        Récupération des prochaines tournées de l'artiste X
-      """
+    """
+      Récupération des prochaines tournées de l'artiste X
+    """
     req="""
           SELECT id_tournee, date, heure, Lieu, image
           FROM tournee

@@ -14,48 +14,26 @@ def main(sender_id, cmd, **extends):
     #----------------------------*$*---------------------------------------#
     #                    Greeting ang giving the first menu        
     #-----------------------------*$*--------------------------------------#
-    chat.send_message(sender_id,"Bonjour, bienvenu sur mon espace privée!!")
+    chat.send_message(sender_id,"Hello hello😍😘😘😘, bienvenu dans cette espace où je vais vous partager ma musique.")
+    chat.send_message(sender_id, " Bon ambiance 💖!!!")
     quick_rep = [
         {
             "content_type": "text",
-            "title": 'Rechercher 🔎',
-            "payload": Payload("__search")
+            "title": 'Listes albums📀',
+            "payload": Payload("__album")
         },
         {
             "content_type": "text",
-            "title": 'Voir les playlists🎶',
-            "payload": Payload("__list")
+            "title": 'Liste chansons🎶',
+            "payload": Payload("__chant")
+        },
+        {
+            "content_type": "text",
+            "title": 'Prochaines tournées🎤',
+            "payload": Payload("__tournee")
         }
     ]
     chat.send_quick_reply(sender_id, quick_rep, 'Que souhaitez-vous faire?')
 
 
-
-def Music_lists(self):
-    #----------------------------*$*---------------------------------------#
-    #                    Fetching music data from our database        
-    #-----------------------------*$*--------------------------------------#
-    self.data = req.list_music()
-    musics=[]
-    i=0
-    while i<len(self.data):
-        musics.append({
-            "title":str(self.data[i][0]+ "-" + self.data[i][1]),
-            "image_url":self.data[i][2],
-            "subtitle":"Artiste:" + str(self.data[i][3]),
-            "buttons":[
-                {
-                    "type":"postback",
-                    "title":"Regarder et écouter 🎧",
-                    "payload":"/VOIR"+" "+str(self.data[i][0])
-                },
-                {
-                    "type":"postback",
-                    "title":"Télécharger ⏳",
-                    "payload":"/DOWNLOAD"+" "+str(self.data[i][0])
-                }
-            ]
-        })
-        i+=1
-    return musics
 
