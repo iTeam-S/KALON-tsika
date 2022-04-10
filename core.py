@@ -6,7 +6,8 @@ from requete import Requete
 bot = ampalibe.init(Configuration())
 chat = bot.chat
 req = Requete(Configuration())
-
+query = bot.query
+print(req.list_music)
 
 @ampalibe.command('/')
 def main(sender_id, cmd, **extends):
@@ -17,13 +18,13 @@ def main(sender_id, cmd, **extends):
     quick_rep = [
         {
             "content_type": "text",
-            "title": 'Rechercher 🎼',
-            "payload": "RECHERCHER"
+            "title": 'Rechercher 🔎',
+            "payload": Payload("__search")
         },
         {
             "content_type": "text",
             "title": 'Voir les playlists🎶',
-            "payload": "LISTES"
+            "payload": Payload("__list")
         }
     ]
     chat.send_quick_reply(sender_id, quick_rep, 'Que souhaitez-vous faire?')
@@ -45,13 +46,13 @@ def Music_lists(self):
             "buttons":[
                 {
                     "type":"postback",
-                    "title":"Regarder et écouter",
-                    "payload":"VOIR"+" "+str(self.data[i][0])
+                    "title":"Regarder et écouter 🎧",
+                    "payload":"/VOIR"+" "+str(self.data[i][0])
                 },
                 {
                     "type":"postback",
-                    "title":"Télécharger",
-                    "payload":"DOWNLOAD"+" "+str(self.data[i][0])
+                    "title":"Télécharger ⏳",
+                    "payload":"/DOWNLOAD"+" "+str(self.data[i][0])
                 }
             ]
         })
