@@ -61,7 +61,7 @@ def album_data(self):
     i++
     return data
 
-def albums_lists(self, sender_id, data, page):
+def albums_lists(self, sender_id, data):
     """
         Fonction pour afficher la liste des albums
     """
@@ -74,7 +74,7 @@ def albums_lists(self, sender_id, data, page):
             Sachant que l'indice initiale est 0
         """
 
-        indice_init = (page-1)*10
+        indice_init = 0
 
         """
         Puis vérifions si la liste des albums sont encore supérieur à indice_init+10 pour mettre à la page suivante
