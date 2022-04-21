@@ -36,7 +36,7 @@ def main(sender_id, cmd, **extends):
     ]
     chat.send_quick_reply(sender_id, quick_rep, 'Que souhaitez-vous faire?')
 
-def albums_list(self):
+def album_data(self):
     '''
         Fetching album data
     '''
@@ -60,4 +60,34 @@ def albums_list(self):
         )
     i++
     return data
+
+def albums_lists(self, sender_id, data, page):
+    """
+        Fonction pour afficher la liste des albums
+    """
+    album = data
+
+    if album:
+        """
+            Mettre en place un système de pagination pour éviter les erreur
+            envoyé par Messenger si la liste excède de 10.
+            Sachant que l'indice initiale est 0
+        """
+
+        indice_init = (page-1)*10
+
+        """
+        Puis vérifions si la liste des albums sont encore supérieur à indice_init+10 pour mettre à la page suivante
+        """
+        if len(album) > indice_init + 10:
+            chat.send_template(sender_id, album[indice_init:indice_init + 10], next=True)
+        
+        else:
+            chat.send_template(sender_id, album[indice_init:indice_init + 10])
+        
+    else:
+        chat.send_message(sender_id, "J'ai pas encore sorti d'album pour l'instant")
+
+
+
 
