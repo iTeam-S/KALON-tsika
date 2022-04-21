@@ -2,12 +2,13 @@ import ampalibe
 from conf import Configuration
 from ampalibe import Payload
 from requete import Requete
+from ampalibe.ui import Element, Button
 
 bot = ampalibe.init(Configuration())
 chat = bot.chat
 req = Requete(Configuration())
 query = bot.query
-print(req.list_music)
+print(req.list_album())
 
 @ampalibe.command('/')
 def main(sender_id, cmd, **extends):
@@ -35,5 +36,28 @@ def main(sender_id, cmd, **extends):
     ]
     chat.send_quick_reply(sender_id, quick_rep, 'Que souhaitez-vous faire?')
 
-
+def albums_list(self):
+    '''
+        Fetching album data
+    '''
+    albums = req.list_album()
+    data = []
+    i = 0
+    while i < len(albums):
+        buttons = [
+            Button(
+                type="postback",
+                title="Details",
+                payload= Payload('__details'+ str(data[i][0]))
+            )
+        ]
+        data.append(
+            Element(
+                title= str(i+1)+ "Album" + data[i][1],
+                image_url= data[i][2],
+                buttons= buttons,
+            )
+        )
+    i++
+    return data
 

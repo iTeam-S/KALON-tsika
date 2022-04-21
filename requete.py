@@ -9,15 +9,15 @@ class Requete (Model):
     Model.__init__(self, conf)
 
   @Model.verif_db
-  def list_album(self, id_artiste):
+  def list_album(self):
     """
       Fonction pour récupérer la liste des albums
     """
     req = """
             SELECT id_album, nom_album, photo
-            FROM album WHERE id_artiste = %s
+            FROM album WHERE id_artiste = 3
           """
-    self.cursor.execute(req, (id_artiste,))
+    self.cursor.execute(req)
     result = self.cursor.fetchall()
     self.db.commit()
     return result
