@@ -58,7 +58,7 @@ def album_data(self):
                 buttons= buttons,
             )
         )
-    i++
+        i = i + 1
     return data
 
 def albums_lists(self, sender_id, data):
