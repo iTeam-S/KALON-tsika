@@ -15,7 +15,7 @@ class Requete (Model):
     """
     req = """
             SELECT id_album, nom_album, photo
-            FROM album WHERE id_artiste = 3
+            FROM album
           """
     self.cursor.execute(req)
     result = self.cursor.fetchall()
@@ -23,16 +23,15 @@ class Requete (Model):
     return result
 
   @Model.verif_db
-  def list_music(self, id_artiste):
+  def list_music(self):
     """
        Fonction pour récupérer la liste des musiques
     """
     req="""
           SELECT id_chant, titre, photo_couverture
-          FROM chansons 
-          WHERE idArtiste = %s
+          FROM chansons
         """
-    self.cursor.execute(req, (id_artiste,))
+    self.cursor.execute(req)
     result = self.cursor.fetchall()
     self.db.commit()
     return result
@@ -48,24 +47,23 @@ class Requete (Model):
           WHERE idAlbum = %s  
         """
 
-    self.cursor.execute(req, (id_album)) 
+    self.cursor.execute(req, (id_album,)) 
     result = self.cursor.fetchall()
     self.db.commit()
     return result
 
 
   @Model.verif_db
-  def list_tournee(self, id_artiste):
+  def list_tournee(self):
     """
       Récupération des prochaines tournées de l'artiste X
     """
     req="""
           SELECT id_tournee, date, heure, Lieu, image
           FROM tournee
-          WHERE id_artiste = %s
         """
 
-    self.cursor.execute(req, (id_artiste))
+    self.cursor.execute(req)
     result = self.cursor.fetchall()
     self.db.commit()
     return result
