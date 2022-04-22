@@ -26,7 +26,7 @@ def main(sender_id, cmd, **extends):
         {
             "content_type": "text",
             "title": 'Liste chansons🎶',
-            "payload": Payload("/chant")
+            "payload": Payload("/musique")
         },
         {
             "content_type": "text",
@@ -50,7 +50,7 @@ def get_album(sender_id, cmd, **extends):
             Button(
                 type="postback",
                 title="Details",
-                payload= Payload('__details'+ str(albums[i][0]))
+                payload= Payload('/details'+ str(albums[i][0]))
             )
         ]
         data.append(
@@ -66,7 +66,7 @@ def get_album(sender_id, cmd, **extends):
 
     
 
-@ampalibe.command('/chant')
+@ampalibe.command('/musique')
 def get_music(sender_id, cmd, **extends):
     '''
         Fonction fetcher les données dans musique et les afficher
@@ -76,11 +76,22 @@ def get_music(sender_id, cmd, **extends):
     i = 0
     while i < len(musiques):
 
-        button = [
+        buttons = [
             Button(
                 type="postback",
-                title="Details",
-                payload= Payload('/details'+ str(musiques[i][0]))
+                title="Ecouter🎧",
+                payload= Payload('/listen'+ str(musiques[i][0]))
+            )
+            Button(
+                type="postback",
+                title="Regarder🎬",
+                payload= Payload('/see'+ str(musiques[i][0]))
+            )
+           
+            Button(
+                type="postback",
+                title="Télécharger⏳",
+                payload= Payload('/download'+ str(musiques[i][0]))
             )
         ]
         data.append(
