@@ -55,7 +55,7 @@ def get_album(sender_id, cmd, **extends):
         ]
         data.append(
             Element(
-                title= str(i+1)+ "Album " + albums[i][1],
+                title= str(i+1)+ "- Album " + albums[i][1],
                 image_url= albums[i][2],
                 buttons= button,
             )
@@ -96,9 +96,9 @@ def get_music(sender_id, cmd, **extends):
         ]
         data.append(
             Element(
-                title= str(i+1)+ "Titre " + musiques[i][1],
+                title= str(i+1)+ "- Titre " + musiques[i][1],
                 image_url= musiques[i][2],
-                buttons= button,
+                buttons= buttons,
             )
         )
         i = i + 1
