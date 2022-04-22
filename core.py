@@ -81,18 +81,18 @@ def get_music(sender_id, cmd, **extends):
                 type="postback",
                 title="Ecouter🎧",
                 payload= Payload('/listen'+ str(musiques[i][0]))
-            )
+            ),
             Button(
                 type="postback",
                 title="Regarder🎬",
                 payload= Payload('/see'+ str(musiques[i][0]))
-            )
+            ),
            
             Button(
                 type="postback",
                 title="Télécharger⏳",
                 payload= Payload('/download'+ str(musiques[i][0]))
-            )
+            ),
         ]
         data.append(
             Element(
