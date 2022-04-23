@@ -79,23 +79,18 @@ def get_music(sender_id, cmd, **extends):
         buttons = [
             Button(
                 type="postback",
-                title="Ecouter🎧",
-                payload= Payload('/listen'+ str(musiques[i][0]))
-            ),
-            Button(
-                type="postback",
-                title="Regarder🎬",
+                title="Voir 🎬",
                 payload= Payload('/see'+ str(musiques[i][0]))
             ),
            
             Button(
                 type="postback",
-                title="Télécharger audio⏳",
+                title="Télécharger MP3⏳",
                 payload= Payload('/down_audio'+ str(musiques[i][0]))
             ),
             Button(
                 type="postback",
-                title="Télécharger vidéo⏳",
+                title="Télécharger MP4⏳",
                 payload= Payload('/down_video'+ str(musiques[i][0]))
             )
         ]
@@ -111,3 +106,30 @@ def get_music(sender_id, cmd, **extends):
     chat.send_template(sender_id, data, next=True)
 
 
+@ampalibe.command('/tournee')
+def get_tournee(sender_id, cmd, **extends):
+    '''
+        Fonction fetcher les données dans album et les afficher
+    '''
+    tournee = req.list_tournee()
+    data = []
+    i = 0
+    while i < len(tournee):
+
+        button = [
+            Button(
+                type="postback",
+                title="Details",
+                payload= Payload('/Réserver'+ str(tournee[i][0]))
+            )
+        ]
+        data.append(
+            Element(
+                title= str(i+1)+ " Le " + str(tournee[i][1]) + " à " + str(tournee[i][2]) + " au " + tournee[i][3],
+                image_url= tournee[i][4],
+                buttons= button,
+            )
+        )
+        i = i + 1
+
+    chat.send_template(sender_id, data, next=True)
