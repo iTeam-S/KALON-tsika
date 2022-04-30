@@ -70,14 +70,14 @@ class Requete (Model):
      
 
   @Model.verif_db
-  def Music_Audio(self, id_chant):
+  def get_audio(self, id_chant):
     """
       Récupération du musique audio de la chanson 
     """
     req="""
           SELECT id_media, media
           FROM media
-          WHERE id_chanson= %s AND id_type = 2
+          WHERE id_chanson= %s AND idType = 2
         """
     self.cursor.execute(req, (id_chant,))
     result = self.cursor.fetchall()
@@ -86,14 +86,14 @@ class Requete (Model):
 
 
   @Model.verif_db
-  def Music_Video(self, id_chant):
+  def get_video(self, id_chant):
     """
       Récupération du musique vidéo de la chanson 
     """
     req="""
           SELECT id_media, media
           FROM media
-          WHERE id_chanson= %s AND id_type = 1
+          WHERE id_chanson= %s AND idType = 1
         """
     self.cursor.execute(req, (id_chant,))
     result = self.cursor.fetchall()

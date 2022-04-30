@@ -9,7 +9,7 @@ chat = bot.chat
 req = Requete(Configuration())
 query = bot.query
 
-
+print(req.list_musicAlbum(1))
 @ampalibe.command('/')
 def main(sender_id, cmd, **extends):
     #----------------------------*$*---------------------------------------#
@@ -79,24 +79,24 @@ def get_music(sender_id, cmd, **extends):
         buttons = [
             Button(
                 type="postback",
-                title="Voir 🎬",
-                payload= Payload('/see'+ str(musiques[i][0]))
+                title="Ecouter🎧",
+                payload= Payload('/listen', id= str(musiques[i][0]))
+            ),
+            Button(
+                type="postback",
+                title="Regarder🎬",
+                payload= Payload('/see', id= str(musiques[i][0]))
             ),
            
             Button(
                 type="postback",
-                title="Télécharger MP3⏳",
-                payload= Payload('/down_audio'+ str(musiques[i][0]))
-            ),
-            Button(
-                type="postback",
-                title="Télécharger MP4⏳",
-                payload= Payload('/down_video'+ str(musiques[i][0]))
+                title="Télécharger⏳",
+                payload= Payload('/down_audio', id= str(musiques[i][0]))
             )
         ]
         data.append(
             Element(
-                title= str(i+1)+ "- Titre " + musiques[i][1],
+                title= str(i+1)+ "- "+ musiques[i][1],
                 image_url= musiques[i][2],
                 buttons= buttons,
             )
@@ -104,6 +104,7 @@ def get_music(sender_id, cmd, **extends):
         i = i + 1
 
     chat.send_template(sender_id, data, next=True)
+    query.set_action(sender_id, None)
 
 
 @ampalibe.command('/tournee')
@@ -133,3 +134,21 @@ def get_tournee(sender_id, cmd, **extends):
         i = i + 1
 
     chat.send_template(sender_id, data, next=True)
+
+
+@ampalibe.command('/see', id)
+def get_Video(sender_id, cmd, **extends):
+    """
+        Fonction pour récupérer la musique vidéo
+    """
+
+    video_name = req.get_video(extends.get('id'))
+    chat.send_message(sender_id, "Enjoy it!!!")
+    chat.send_file_url(sender_id, f"assets/public/{video_name}", filetype='video')
+
+
+
+
+
+
+
