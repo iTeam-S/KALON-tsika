@@ -148,6 +148,17 @@ def get_Video(sender_id, id_music, **extends):
     chat.send_file_url(sender_id, Configuration.APP_URL+f"/asset/{video_name}", filetype='video')
 
 
+@ampalibe.command('/listen')
+def get_Video(sender_id, id_music, **extends):
+    """
+        Fonction pour récupérer la musique audio
+    """
+
+    audio_name = req.get_audio(id_music)
+    print(audio_name)
+    chat.send_message(sender_id, "Enjoy it!!!")
+    chat.send_file_url(sender_id, Configuration.APP_URL+f"/asset/{audio_name}", filetype='audio')
+
 
 
 
