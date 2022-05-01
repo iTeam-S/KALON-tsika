@@ -91,14 +91,14 @@ class Requete (Model):
       Récupération du musique vidéo de la chanson 
     """
     req="""
-          SELECT id_media, media
+          SELECT media
           FROM media
           WHERE id_chanson= %s AND idType = 1
         """
     self.cursor.execute(req, (id_chant,))
-    result = self.cursor.fetchall()
+    result = self.cursor.fetchone()
     self.db.commit()
-    return result
+    return result[0]
 
 
   @Model.verif_db

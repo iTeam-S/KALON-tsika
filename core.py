@@ -80,18 +80,18 @@ def get_music(sender_id, cmd, **extends):
             Button(
                 type="postback",
                 title="Ecouter🎧",
-                payload= Payload('/listen', id= str(musiques[i][0]))
+                payload= Payload('/listen', id_music= str(musiques[i][0]))
             ),
             Button(
                 type="postback",
                 title="Regarder🎬",
-                payload= Payload('/see', id= str(musiques[i][0]))
+                payload= Payload('/see', id_music= str(musiques[i][0]))
             ),
            
             Button(
                 type="postback",
                 title="Télécharger⏳",
-                payload= Payload('/down_audio', id= str(musiques[i][0]))
+                payload= Payload('/down_audio', id_music= str(musiques[i][0]))
             )
         ]
         data.append(
@@ -136,17 +136,16 @@ def get_tournee(sender_id, cmd, **extends):
     chat.send_template(sender_id, data, next=True)
 
 
-@ampalibe.command('/see', id)
-def get_Video(sender_id, cmd, **extends):
+@ampalibe.command('/see')
+def get_Video(sender_id, id_music, **extends):
     """
         Fonction pour récupérer la musique vidéo
     """
 
-    video_name = req.get_video(extends.get('id'))
+    video_name = req.get_video(id_music)
+    print(video_name)
     chat.send_message(sender_id, "Enjoy it!!!")
-    chat.send_file_url(sender_id, f"assets/public/{video_name}", filetype='video')
-
-
+    chat.send_file_url(sender_id, Configuration.APP_URL+f"/asset/{video_name}", filetype='video')
 
 
 
