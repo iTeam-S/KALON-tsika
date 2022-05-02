@@ -9,7 +9,6 @@ chat = bot.chat
 req = Requete(Configuration())
 query = bot.query
 
-print(req.list_musicAlbum(1))
 @ampalibe.command('/')
 def main(sender_id, cmd, **extends):
     #----------------------------*$*---------------------------------------#
@@ -50,7 +49,7 @@ def get_album(sender_id, cmd, **extends):
             Button(
                 type="postback",
                 title="Details",
-                payload= Payload('/details'+ str(albums[i][0]))
+                payload= Payload('/details', id_album = str(albums[i][0]))
             )
         ]
         data.append(
@@ -91,7 +90,7 @@ def get_music(sender_id, cmd, **extends):
             Button(
                 type="postback",
                 title="Télécharger⏳",
-                payload= Payload('/down_audio', id_music= str(musiques[i][0]))
+                payload= Payload('/download', id_music= str(musiques[i][0]))
             )
         ]
         data.append(
@@ -136,6 +135,7 @@ def get_tournee(sender_id, cmd, **extends):
     chat.send_template(sender_id, data, next=True)
 
 
+#--------------------------------------*Traitement des paload musique-----------------------------------------------------------#
 @ampalibe.command('/see')
 def get_Video(sender_id, id_music, **extends):
     """
@@ -149,7 +149,7 @@ def get_Video(sender_id, id_music, **extends):
 
 
 @ampalibe.command('/listen')
-def get_Video(sender_id, id_music, **extends):
+def get_Audio(sender_id, id_music, **extends):
     """
         Fonction pour récupérer la musique audio
     """
@@ -160,5 +160,42 @@ def get_Video(sender_id, id_music, **extends):
     chat.send_file_url(sender_id, Configuration.APP_URL+f"/asset/{audio_name}", filetype='audio')
 
 
+#-------------------------------------------------------------*Traitement de l'album*--------------------------------------------------------#
+@ampalibe.command('/details')
+def get_details(sender_id, id_album, **extends):
+    """
+        Fonction pour afficher la liste des musique contenu dans l'album
+    """
+    chansons = req.get_AlbumMusic(id_album)
+    print(chansons)
 
+    data = []
+    i = 0
+    while i < len(chansons):
+        buttons = [
+            Button(
+                type="postback",
+                title="Ecouter🎧",
+                payload= Payload('/listen', id_music= str(chansons[i][0]))
+            ),
+            Button(
+                type="postback",
+                title="Regarder🎬",
+                payload= Payload('/see', id_music= str(chansons[i][0]))
+            )
+        ]
+        data.append(
+           Element(
+               title= str(i+1) + "- " + chansons[i][1],
+               image_url= chansons[i][2],
+               buttons = buttons
+           )
+        )
+        i = i + 1
+    chat.send_message(sender_id, "Voilà donc les chansons contenu dans cet album")
+    chat.send_template(sender_id, data, next=True)
+    
+
+
+#---------------------------------------------------------*Traitement tournée*------------------------------------------------------------------#
 

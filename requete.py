@@ -37,9 +37,9 @@ class Requete (Model):
     return result
 
   @Model.verif_db
-  def list_musicAlbum(self, id_album):
+  def get_AlbumMusic(self, id_album):
     """
-      Function pour récupérer la liste des chansons compris dans un album
+      Function pour récupérer la liste des musiques contenu dans un albums
     """
     req="""
           SELECT id_chant, titre, photo_couverture
