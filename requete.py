@@ -117,3 +117,18 @@ class Requete (Model):
     self.db.commit()
     return result
   
+  @Model.verif_db
+  def get_reservation(self, id_tournee):
+    """
+      Fonction pour vérifier la disponibilité selon la date de tournée
+    """
+    req="""
+          SELECT id_reservation, date_debut, date_fin, nbre_billet
+          FROM reservation
+          WHERE id_tournee=%s
+        """
+    self.cursor.execute(req, (id_tournee,))
+    result = self.cursor.fetchall()
+    self.db.commit()
+    return result
+  

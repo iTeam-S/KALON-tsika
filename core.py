@@ -1,8 +1,8 @@
 import ampalibe
 from conf import Configuration
-from ampalibe import Payload
+from ampalibe import Payload, download_file
 from requete import Requete
-from ampalibe.ui import Element, Button
+from ampalibe.ui import Element, Button, QuickReply
 
 bot = ampalibe.init(Configuration())
 chat = bot.chat
@@ -119,13 +119,13 @@ def get_tournee(sender_id, cmd, **extends):
         button = [
             Button(
                 type="postback",
-                title="Details",
-                payload= Payload('/Réserver'+ str(tournee[i][0]))
+                title="Réserver",
+                payload= Payload('/Reserver', id_tournee = str(tournee[i][0]))
             )
         ]
         data.append(
             Element(
-                title= str(i+1)+ " Le " + str(tournee[i][1]) + " à " + str(tournee[i][2]) + " au " + tournee[i][3],
+                title= str(i+1)+ "- Le " + str(tournee[i][1]) + " à " + str(tournee[i][2]) + " au " + tournee[i][3],
                 image_url= tournee[i][4],
                 buttons= button,
             )
@@ -198,4 +198,9 @@ def get_details(sender_id, id_album, **extends):
 
 
 #---------------------------------------------------------*Traitement tournée*------------------------------------------------------------------#
-
+@ampalibe.command('/Reserver')
+def get_reservation(sender_id,id_tournee, **extends):
+    """
+        Fonction pour faire la réservation
+    """
+    
