@@ -1,8 +1,9 @@
 import ampalibe
 from conf import Configuration
-from ampalibe import Payload, download_file
+from ampalibe import Payload
 from requete import Requete
 from ampalibe.ui import Element, Button, QuickReply
+from datetime import datetime
 
 bot = ampalibe.init(Configuration())
 chat = bot.chat
@@ -203,4 +204,23 @@ def get_reservation(sender_id,id_tournee, **extends):
     """
         Fonction pour faire la réservation
     """
+    disponibilite = req.get_reservation(id_tournee)
+    i = 0
+    date_debut = disponibilite[i][1]
+    date_fin = disponibilite[i][2]
+    nbr_billet = disponibilite[i][3]
+
+    chat.send_message(sender_id, "Voià les informations pour réserver: ")
+    chat.send_message(sender_id, " 📑Debut de réservation: "+ str(date_debut) + " -📑Fin de réservation: " + str(date_fin) + " -📑Nombre de billet disponible" + str(nbr_billet))
     
+
+    if datetime.now() >= date_debut:
+        if datetime.now() <= date_fin:
+            if nbr_billet >= 1:
+                print("Passer au payement")
+        else:
+            pass
+
+    else:
+        pass
+
