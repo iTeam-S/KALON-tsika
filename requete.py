@@ -144,4 +144,11 @@ class Requete (Model):
     self.db.commit()
     return result[0]
 
-  
+  @Model.verif_db
+  def set_temp(self, user_id, result):
+    '''
+      Insertion des données temporaire des utilisateur
+    '''
+    req = "UPDATE amp_user SET tmp= %s WHERE FB_id = %s"
+    self.cursor.execute(req, (result, user_id))
+    slef.db.commit()

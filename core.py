@@ -9,7 +9,8 @@ bot = ampalibe.init(Configuration())
 chat = bot.chat
 req = Requete(Configuration())
 query = bot.query
-
+temp = req.get_temp(1)
+print(temp)
 @ampalibe.command('/')
 def main(sender_id, cmd, **extends):
     #----------------------------*$*---------------------------------------#
@@ -227,7 +228,7 @@ def get_reservation(sender_id,id_tournee, **extends):
 @ampalibe.command('/suivant')
 def payement(sender_id, id_res, **extends):
     disponibilite = req.get_reservation(id_res)
-    
+
     i = 0
     date_debut = disponibilite[i][1]
     date_fin = disponibilite[i][2]
