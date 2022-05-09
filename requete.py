@@ -131,4 +131,17 @@ class Requete (Model):
     result = self.cursor.fetchall()
     self.db.commit()
     return result
+
+  
+  @Model.verif_db
+  def get_temp(self, user_id):
+    '''
+      Récuperer les données temporaire de l'utilisateur
+    '''
+    req = "SELECT tmp FROM amp_user"
+    self.cursor.execute(req, (user_id))
+    result = self.cursor.fetchone()
+    self.db.commit()
+    return result[0]
+
   

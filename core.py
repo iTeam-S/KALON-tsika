@@ -237,6 +237,9 @@ def payement(sender_id, id_res, **extends):
         if datetime.now() <= date_fin:
             if nbr_billet >= 1:
                 print("Passer au payement")
+
+            else:
+                pass
         else:
             pass
 
