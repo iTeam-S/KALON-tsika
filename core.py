@@ -206,14 +206,33 @@ def get_reservation(sender_id,id_tournee, **extends):
     """
     disponibilite = req.get_reservation(id_tournee)
     i = 0
+
+    chat.send_message(sender_id, "Voià les informations pour réserver: ")
+    chat.send_message(sender_id, " 📑Debut de réservation: "+ str(disponibilite[i][1]) + " -📑Fin de réservation: " + str(disponibilite[i][2]) + " -📑Nombre de billet disponible" + str(disponibilite[i][3]))
+    buttons = [
+        Button(
+            type='postback',
+            title='Continuer',
+            payload=Payload('/suivant', id_res=id_tournee)
+        ),
+        Button(
+            type='postback',
+            title='Annuler',
+            payload=Payload('/annuler', id_res=id_tournee)
+        )
+    ]
+    chat.send_button(sender_id, buttons, "Voulez-vous continuer?")
+
+
+@ampalibe.command('/suivant')
+def payement(sender_id, id_res, **extends):
+    disponibilite = req.get_reservation(id_res)
+    
+    i = 0
     date_debut = disponibilite[i][1]
     date_fin = disponibilite[i][2]
     nbr_billet = disponibilite[i][3]
-
-    chat.send_message(sender_id, "Voià les informations pour réserver: ")
-    chat.send_message(sender_id, " 📑Debut de réservation: "+ str(date_debut) + " -📑Fin de réservation: " + str(date_fin) + " -📑Nombre de billet disponible" + str(nbr_billet))
     
-
     if datetime.now() >= date_debut:
         if datetime.now() <= date_fin:
             if nbr_billet >= 1:
