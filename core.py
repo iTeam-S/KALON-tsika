@@ -80,19 +80,13 @@ def get_music(sender_id, cmd, **extends):
         buttons = [
             Button(
                 type="postback",
-                title="Ecouter🎧",
+                title="Ecouter🎧/Télécharger⏳",
                 payload= Payload('/listen', id_music= str(musiques[i][0]))
             ),
             Button(
                 type="postback",
-                title="Regarder🎬",
+                title="Regarder🎬/Télécharger⏳",
                 payload= Payload('/see', id_music= str(musiques[i][0]))
-            ),
-           
-            Button(
-                type="postback",
-                title="Télécharger⏳",
-                payload= Payload('/download', id_music= str(musiques[i][0]))
             )
         ]
         data.append(
@@ -177,12 +171,12 @@ def get_details(sender_id, id_album, **extends):
         buttons = [
             Button(
                 type="postback",
-                title="Ecouter🎧",
+                title="Ecouter🎧/Télécharger⏳",
                 payload= Payload('/listen', id_music= str(chansons[i][0]))
             ),
             Button(
                 type="postback",
-                title="Regarder🎬",
+                title="Regarder🎬/Télécharger⏳",
                 payload= Payload('/see', id_music= str(chansons[i][0]))
             )
         ]
