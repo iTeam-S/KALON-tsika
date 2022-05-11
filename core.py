@@ -115,8 +115,8 @@ def get_tournee(sender_id, cmd, **extends):
         button = [
             Button(
                 type="postback",
-                title="Réserver",
-                payload= Payload('/Reserver', id_tournee = str(tournee[i][0]))
+                title="Plus d'information",
+                payload= Payload('/info', id_tournee = str(tournee[i][0]))
             )
         ]
         data.append(
@@ -194,10 +194,10 @@ def get_details(sender_id, id_album, **extends):
 
 
 #---------------------------------------------------------*Traitement tournée*------------------------------------------------------------------#
-@ampalibe.command('/Reserver')
-def get_reservation(sender_id,id_tournee, **extends):
+@ampalibe.command('/info')
+def get_information(sender_id,id_tournee, **extends):
     """
-        Fonction pour faire la réservation
+        Fonction pour donner les information sur la réservation
     """
     disponibilite = req.get_reservation(id_tournee)
     i = 0
@@ -207,20 +207,20 @@ def get_reservation(sender_id,id_tournee, **extends):
     buttons = [
         Button(
             type='postback',
-            title='Continuer',
-            payload=Payload('/suivant', id_res=id_tournee)
+            title='OUI',
+            payload=Payload('/reserver', id_res=id_tournee)
         ),
         Button(
             type='postback',
-            title='Annuler',
+            title='NON',
             payload=Payload('/annuler', id_res=id_tournee)
         )
     ]
     chat.send_button(sender_id, buttons, "Voulez-vous continuer?")
 
 
-@ampalibe.command('/suivant')
-def payement(sender_id, id_res, **extends):
+@ampalibe.command('/reserver')
+def get_reservation(sender_id, id_res, **extends):
     disponibilite = req.get_reservation(id_res)
 
     i = 0
@@ -231,13 +231,28 @@ def payement(sender_id, id_res, **extends):
     if datetime.now() >= date_debut:
         if datetime.now() <= date_fin:
             if nbr_billet >= 1:
-                print("Passer au payement")
+                print("Reservation")
+
+                chat.send_message(sender_id, "Pour pouvoir valider votre réservation, il faudrait passer au payement!!!")
+                quick_rep = [
+                    QuickReply(
+                        title = 'Orange',
+                        payload = Payload('/orange', id_musics = id_res)
+                    ),
+                    QuickReply(
+                        title = 'Telma',
+                        payload = Payload('/telma', id_musics = id_res)
+                    )
+                ]
+                chat.send_quick_reply(sender_id, quick_rep, "Operateur")
 
             else:
-                pass
+                chat.send_message(sender_id, "Désolé, guichet fermé!!")
         else:
-            pass
+           chat.send_message(sender_id, "La date de réservation est déjà expiré, meri de votre intérêt!!")
 
     else:
-        pass
+       chat.send_message(sender_id, "Veuillez attendre le date début de réservation" + str(date_debut))
+
+
 
