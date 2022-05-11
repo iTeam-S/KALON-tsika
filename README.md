@@ -15,4 +15,4 @@ contrairement à Youtube.com, Spotify
 - liste des chansons
   - Regarder/ Télecharger music ( video )
   - Ecouter / Télecharger music ( audio )
-- Liste des prrochains tournés
+- Liste des prochaines tournées
