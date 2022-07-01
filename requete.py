@@ -1,6 +1,5 @@
 from ampalibe import Model
 
-
 class Requete (Model):
   def __init__(self, conf):
     '''
@@ -29,7 +28,7 @@ class Requete (Model):
     """
     req="""
           SELECT id_chant, titre, photo_couverture
-          FROM chansons
+          FROM musique
         """
     self.cursor.execute(req)
     result = self.cursor.fetchall()
@@ -43,8 +42,8 @@ class Requete (Model):
     """
     req="""
           SELECT id_chant, titre, photo_couverture
-          FROM chansons 
-          WHERE idAlbum = %s  
+          FROM musique 
+          WHERE id_album = %s  
         """
 
     self.cursor.execute(req, (id_album,)) 
@@ -59,7 +58,7 @@ class Requete (Model):
       Récupération des prochaines tournées de l'artiste X
     """
     req="""
-          SELECT id_tournee, date, heure, Lieu, image
+          SELECT id_tournee, date_tournee, lieu, image
           FROM tournee
         """
 
@@ -77,7 +76,7 @@ class Requete (Model):
     req="""
           SELECT media
           FROM media
-          WHERE id_chanson= %s AND idType = 2
+          WHERE id_chant= %s AND id_type = 2
         """
     self.cursor.execute(req, (id_chant,))
     result = self.cursor.fetchone()
@@ -93,7 +92,7 @@ class Requete (Model):
     req="""
           SELECT media
           FROM media
-          WHERE id_chanson= %s AND idType = 1
+          WHERE id_chant= %s AND id_type = 1
         """
     self.cursor.execute(req, (id_chant,))
     result = self.cursor.fetchone()
@@ -108,7 +107,7 @@ class Requete (Model):
     """
     req="""
           SELECT id_chant, titre, photo_couverture
-          FROM chansons
+          FROM musique
           WHERE UPPER(titre) LIKE %s
           OR SOUNDEX(titre)=SOUNDEX(%s)
         """
@@ -139,7 +138,7 @@ class Requete (Model):
       Récuperer les données temporaire de l'utilisateur
     '''
     req = "SELECT tmp FROM amp_user"
-    self.cursor.execute(req, (user_id))
+    self.cursor.execute(req, (user_id,))
     result = self.cursor.fetchone()
     self.db.commit()
     return result[0]
@@ -152,3 +151,5 @@ class Requete (Model):
     req = "UPDATE amp_user SET tmp= %s WHERE FB_id = %s"
     self.cursor.execute(req, (result, user_id))
     slef.db.commit()
+
+#---------------------------------Requete pour l'admin----------------------------------------#

@@ -23,3 +23,5 @@ class Configuration:
     APP_PORT = int(env.get('AMP_PORT'))
     APP_URL = env.get('AMP_URL')
 
+    WORKERS = env.get('WORKERS')
+

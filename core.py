@@ -9,8 +9,8 @@ bot = ampalibe.init(Configuration())
 chat = bot.chat
 req = Requete(Configuration())
 query = bot.query
-temp = req.get_temp(1)
-print(temp)
+# temp = req.get_temp(1)
+#print(temp)
 @ampalibe.command('/')
 def main(sender_id, cmd, **extends):
     #----------------------------*$*---------------------------------------#
@@ -18,6 +18,22 @@ def main(sender_id, cmd, **extends):
     #-----------------------------*$*--------------------------------------#
     chat.send_message(sender_id,"Hello hello😍😘😘😘, bienvenu dans cette espace où je vais vous partager ma musique.")
     chat.send_message(sender_id, " Bon ambiance 💖!!!")
+    persistent_menu = [
+        Button(type='postback', title='Menu principale🧾', payload='/get_started'),
+        Button(type='postback', title='Recherche musique🔎', payload='/search')
+    ]
+
+    chat.persistent_menu(sender_id, persistent_menu)
+
+
+#Getting started
+#----------------------------------!!!Recherche musique!!!-------------------------------------------------#
+@ampalibe.command('/search')
+def search_music(sender_id, cmd, **extends):
+    pass
+#----------------------------------!!!Menu principale!!!---------------------------------------------------#
+@ampalibe.command('/get_started')
+def get_menu(sender_id, cmd, **extends):
     quick_rep = [
         {
             "content_type": "text",
@@ -121,8 +137,8 @@ def get_tournee(sender_id, cmd, **extends):
         ]
         data.append(
             Element(
-                title= str(i+1)+ "- Le " + str(tournee[i][1]) + " à " + str(tournee[i][2]) + " au " + tournee[i][3],
-                image_url= tournee[i][4],
+                title= str(i+1)+ "- Le " + str(tournee[i][1]) + " au " + str(tournee[i][2]),
+                image_url= tournee[i][3],
                 buttons= button,
             )
         )
