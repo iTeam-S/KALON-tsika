@@ -150,6 +150,6 @@ class Requete (Model):
     '''
     req = "UPDATE amp_user SET tmp= %s WHERE FB_id = %s"
     self.cursor.execute(req, (result, user_id))
-    slef.db.commit()
+    self.db.commit()
 
 #---------------------------------Requete pour l'admin----------------------------------------#

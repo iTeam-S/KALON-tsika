@@ -11,6 +11,7 @@ req = Requete(Configuration())
 query = bot.query
 # temp = req.get_temp(1)
 #print(temp)
+print(Configuration.APP_URL)
 @ampalibe.command('/')
 def main(sender_id, cmd, **extends):
     #----------------------------*$*---------------------------------------#
@@ -30,7 +31,43 @@ def main(sender_id, cmd, **extends):
 #----------------------------------!!!Recherche musique!!!-------------------------------------------------#
 @ampalibe.command('/search')
 def search_music(sender_id, cmd, **extends):
-    pass
+    chat.send_message(sender_id, "Saisissez le titre de la chanson que vous souhaitez recherché")
+    query.set_action(sender_id, '/get_title')
+
+@ampalibe.action('/get_title')
+def result_search(sender_id, cmd, **extends):
+    query.set_action(sender_id, None)
+    verif_title = req.Music_Search(cmd)
+    print(verif_title)
+    data = []
+    i = 0
+    while i < len(verif_title):
+        buttons = [
+            Button(
+                type="postback",
+                title="Ecouter🎧/Télécharger⏳",
+                payload= Payload('/listen', id_music= str(verif_title[i][0]))
+            ),
+            Button(
+                type="postback",
+                title="Regarder🎬/Télécharger⏳",
+                payload= Payload('/see', id_music= str(verif_title[i][0]))
+            )
+        ]
+        data.append(
+            Element(
+                title= str(i+1)+ "- "+ verif_title[i][1],
+                image_url= verif_title[i][2],
+                buttons= buttons,
+            )
+        )
+
+        i = i + 1
+
+    chat.send_template(sender_id, data, next=True)
+    query.set_action(sender_id, None)
+    
+
 #----------------------------------!!!Menu principale!!!---------------------------------------------------#
 @ampalibe.command('/get_started')
 def get_menu(sender_id, cmd, **extends):
@@ -157,7 +194,7 @@ def get_Video(sender_id, id_music, **extends):
     video_name = req.get_video(id_music)
     print(video_name)
     chat.send_message(sender_id, "Enjoy it!!!")
-    chat.send_file_url(sender_id, Configuration.APP_URL+f"/asset/{video_name}", filetype='video')
+    chat.send_file_url(sender_id, Configuration.APP_URL+f"asset/{video_name}", filetype='video')
 
 
 @ampalibe.command('/listen')
@@ -169,7 +206,7 @@ def get_Audio(sender_id, id_music, **extends):
     audio_name = req.get_audio(id_music)
     print(audio_name)
     chat.send_message(sender_id, "Enjoy it!!!")
-    chat.send_file_url(sender_id, Configuration.APP_URL+f"/asset/{audio_name}", filetype='audio')
+    chat.send_file_url(sender_id, f"{Configuration.APP_URL}asset/{audio_name}", filetype='video')
 
 
 #-------------------------------------------------------------*Traitement de l'album*--------------------------------------------------------#
