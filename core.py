@@ -39,33 +39,39 @@ def result_search(sender_id, cmd, **extends):
     query.set_action(sender_id, None)
     verif_title = req.Music_Search(cmd)
     print(verif_title)
-    data = []
-    i = 0
-    while i < len(verif_title):
-        buttons = [
-            Button(
-                type="postback",
-                title="Ecouter🎧/Télécharger⏳",
-                payload= Payload('/listen', id_music= str(verif_title[i][0]))
-            ),
-            Button(
-                type="postback",
-                title="Regarder🎬/Télécharger⏳",
-                payload= Payload('/see', id_music= str(verif_title[i][0]))
+    if verif_title != []:
+        print('Misy tokoa!!!')
+        data = []
+        i = 0
+        while i < len(verif_title):
+            buttons = [
+                Button(
+                    type="postback",
+                    title="Ecouter🎧/Télécharger⏳",
+                    payload= Payload('/listen', id_music= str(verif_title[i][0]))
+                ),
+                Button(
+                    type="postback",
+                    title="Regarder🎬/Télécharger⏳",
+                    payload= Payload('/see', id_music= str(verif_title[i][0]))
+                )
+            ]
+            data.append(
+                Element(
+                    title= str(i+1)+ "- "+ verif_title[i][1],
+                    image_url= verif_title[i][2],
+                    buttons= buttons,
+                )
             )
-        ]
-        data.append(
-            Element(
-                title= str(i+1)+ "- "+ verif_title[i][1],
-                image_url= verif_title[i][2],
-                buttons= buttons,
-            )
-        )
 
-        i = i + 1
+            i = i + 1
 
-    chat.send_template(sender_id, data, next=True)
-    query.set_action(sender_id, None)
+        chat.send_template(sender_id, data, next=True)
+        query.set_action(sender_id, None)
+
+    else:
+        chat.send_message(sender_id, "Désolé, ce titre n'existe pas dans mes chansons")
+        print('Joya tsy tafa!!!')
     
 
 #----------------------------------!!!Menu principale!!!---------------------------------------------------#
