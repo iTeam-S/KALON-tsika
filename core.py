@@ -26,7 +26,6 @@ def main(sender_id, cmd, **extends):
 
     chat.persistent_menu(sender_id, persistent_menu)
 
-
 #Getting started
 #----------------------------------!!!Recherche musique!!!-------------------------------------------------#
 @ampalibe.command('/search')
@@ -46,15 +45,21 @@ def result_search(sender_id, cmd, **extends):
         while i < len(verif_title):
             buttons = [
                 Button(
-                    type="postback",
-                    title="Ecouter🎧/Télécharger⏳",
-                    payload= Payload('/listen', id_music= str(verif_title[i][0]))
-                ),
-                Button(
-                    type="postback",
-                    title="Regarder🎬/Télécharger⏳",
-                    payload= Payload('/see', id_music= str(verif_title[i][0]))
-                )
+                type="postback",
+                title="Ecouter🎧",
+                payload= Payload('/listen', id_music= str(verif_title[i][0]))
+            ),
+            Button(
+                type="postback",
+                title="Regarder🎬",
+                payload= Payload('/see', id_music= str(verif_title[i][0]))
+            ),
+            Button(
+                type="postback",
+                title="Télécharger⏳",
+                payload=Payload('/download', id_music= str(verif_title[i][0]))
+
+            )
             ]
             data.append(
                 Element(
@@ -73,7 +78,9 @@ def result_search(sender_id, cmd, **extends):
         chat.send_message(sender_id, "Désolé, ce titre n'existe pas dans mes chansons")
         print('Joya tsy tafa!!!')
     
-
+#------------*----------------*Fonction pour la liste de musique------------------*------------------#
+def music_template(id_music):
+    pass
 #----------------------------------!!!Menu principale!!!---------------------------------------------------#
 @ampalibe.command('/get_started')
 def get_menu(sender_id, cmd, **extends):
@@ -124,8 +131,6 @@ def get_album(sender_id, cmd, **extends):
 
     chat.send_template(sender_id, data, next=True)
 
-    
-
 @ampalibe.command('/musique')
 def get_music(sender_id, cmd, **extends):
     '''
@@ -139,13 +144,19 @@ def get_music(sender_id, cmd, **extends):
         buttons = [
             Button(
                 type="postback",
-                title="Ecouter🎧/Télécharger⏳",
+                title="Ecouter🎧",
                 payload= Payload('/listen', id_music= str(musiques[i][0]))
             ),
             Button(
                 type="postback",
-                title="Regarder🎬/Télécharger⏳",
+                title="Regarder🎬",
                 payload= Payload('/see', id_music= str(musiques[i][0]))
+            ),
+            Button(
+                type="postback",
+                title="Télécharger⏳",
+                payload=Payload('/download', id_music= str(musiques[i][0]))
+
             )
         ]
         data.append(
@@ -201,6 +212,8 @@ def get_Video(sender_id, id_music, **extends):
     print(video_name)
     chat.send_message(sender_id, "Enjoy it!!!")
     chat.send_file_url(sender_id, Configuration.APP_URL+f"asset/{video_name}", filetype='video')
+    query.set_action(sender_id, None)
+    
 
 
 @ampalibe.command('/listen')
@@ -212,8 +225,23 @@ def get_Audio(sender_id, id_music, **extends):
     audio_name = req.get_audio(id_music)
     print(audio_name)
     chat.send_message(sender_id, "Enjoy it!!!")
-    chat.send_file_url(sender_id, f"{Configuration.APP_URL}asset/{audio_name}", filetype='video')
+    chat.send_file_url(sender_id, f"{Configuration.APP_URL}asset/{audio_name}", filetype='audio')
+    query.set_action(sender_id, None)
 
+@ampalibe.command('/download')
+def download_music(sender_id, id_music, **extends):
+    """Fonction pour télecharger la musique"""
+    quick_rep = [
+    QuickReply(
+        title="MP3",
+        payload=Payload('/mp3', id_down = id_music),
+    ),
+    QuickReply(
+        title="MP4",
+        payload=Payload('/mp4', id_down = id_music)
+    ),
+    ]
+    chat.send_quick_reply(sender_id, quick_rep, 'Audio ou Vidéo?')
 
 #-------------------------------------------------------------*Traitement de l'album*--------------------------------------------------------#
 @ampalibe.command('/details')
@@ -230,13 +258,19 @@ def get_details(sender_id, id_album, **extends):
         buttons = [
             Button(
                 type="postback",
-                title="Ecouter🎧/Télécharger⏳",
+                title="Ecouter🎧",
                 payload= Payload('/listen', id_music= str(chansons[i][0]))
             ),
             Button(
                 type="postback",
-                title="Regarder🎬/Télécharger⏳",
+                title="Regarder🎬",
                 payload= Payload('/see', id_music= str(chansons[i][0]))
+            ),
+            Button(
+                type="postback",
+                title="Télécharger⏳",
+                payload=Payload('/download', id_music= str(chansons[i][0]))
+
             )
         ]
         data.append(
@@ -312,6 +346,8 @@ def get_reservation(sender_id, id_res, **extends):
 
     else:
        chat.send_message(sender_id, "Veuillez attendre le date début de réservation" + str(date_debut))
+
+
 
 
 

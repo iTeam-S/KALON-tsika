@@ -76,7 +76,7 @@ class Requete (Model):
     req="""
           SELECT media
           FROM media
-          WHERE id_chant= %s AND id_type = 2
+          WHERE id_chant= %s AND id_type = 1
         """
     self.cursor.execute(req, (id_chant,))
     result = self.cursor.fetchone()
@@ -92,7 +92,7 @@ class Requete (Model):
     req="""
           SELECT media
           FROM media
-          WHERE id_chant= %s AND id_type = 1
+          WHERE id_chant= %s AND id_type = 2
         """
     self.cursor.execute(req, (id_chant,))
     result = self.cursor.fetchone()
