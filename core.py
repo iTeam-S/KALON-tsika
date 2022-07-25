@@ -4,6 +4,7 @@ from ampalibe import Payload
 from requete import Requete
 from ampalibe.ui import Element, Button, QuickReply
 from datetime import datetime
+import wget
 
 bot = ampalibe.init(Configuration())
 chat = bot.chat
@@ -243,6 +244,18 @@ def download_music(sender_id, id_music, **extends):
     ]
     chat.send_quick_reply(sender_id, quick_rep, 'Audio ou Vidéo?')
 
+@ampalibe.command('/mp3')
+def download_audio(sender_id, id_down, **extends):
+    """Fonction pour télecharger la musique audio"""
+    audio_name = req.get_audio(id_down)
+    print(audio_name)
+    url = f"{Configuration.APP_URL}asset/{audio_name}"
+    response = wget.download(url)
+
+@ampalibe.command('/mp4')
+def download_video(sender_id, id_down, **extends):
+    """Fonction pour télecharger la musique audio"""
+    pass
 #-------------------------------------------------------------*Traitement de l'album*--------------------------------------------------------#
 @ampalibe.command('/details')
 def get_details(sender_id, id_album, **extends):
