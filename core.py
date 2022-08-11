@@ -44,28 +44,23 @@ def result_search(sender_id, cmd, **extends):
         data = []
         i = 0
         while i < len(verif_title):
+            image = verif_title[i][2]
             buttons = [
                 Button(
                 type="postback",
-                title="Ecouter🎧",
+                title="Ecouter🎧/Télécharger⏳",
                 payload= Payload('/listen', id_music= str(verif_title[i][0]))
             ),
             Button(
                 type="postback",
-                title="Regarder🎬",
+                title="Regarder🎬/Télécharger⏳",
                 payload= Payload('/see', id_music= str(verif_title[i][0]))
             ),
-            Button(
-                type="postback",
-                title="Télécharger⏳",
-                payload=Payload('/download', id_music= str(verif_title[i][0]))
-
-            )
             ]
             data.append(
                 Element(
                     title= str(i+1)+ "- "+ verif_title[i][1],
-                    image_url= verif_title[i][2],
+                    image_url= Configuration.APP_URL+f"asset\{image}",
                     buttons= buttons,
                 )
             )
@@ -141,29 +136,23 @@ def get_music(sender_id, cmd, **extends):
     data = []
     i = 0
     while i < len(musiques):
-
+        image = musiques[i][2]
         buttons = [
             Button(
                 type="postback",
-                title="Ecouter🎧",
+                title="Ecouter🎧/Télécharger⏳",
                 payload= Payload('/listen', id_music= str(musiques[i][0]))
             ),
             Button(
                 type="postback",
-                title="Regarder🎬",
+                title="Regarder🎬/Télécharger⏳",
                 payload= Payload('/see', id_music= str(musiques[i][0]))
-            ),
-            Button(
-                type="postback",
-                title="Télécharger⏳",
-                payload=Payload('/download', id_music= str(musiques[i][0]))
-
             )
         ]
         data.append(
             Element(
                 title= str(i+1)+ "- "+ musiques[i][1],
-                image_url= musiques[i][2],
+                image_url= Configuration.APP_URL+f"asset\{image}",
                 buttons= buttons,
             )
         )
@@ -182,7 +171,7 @@ def get_tournee(sender_id, cmd, **extends):
     data = []
     i = 0
     while i < len(tournee):
-
+        image = tournee[i][3]
         button = [
             Button(
                 type="postback",
@@ -193,7 +182,7 @@ def get_tournee(sender_id, cmd, **extends):
         data.append(
             Element(
                 title= str(i+1)+ "- Le " + str(tournee[i][1]) + " au " + str(tournee[i][2]),
-                image_url= tournee[i][3],
+                image_url= Configuration.APP_URL+f"asset\{image}",
                 buttons= button,
             )
         )
@@ -226,36 +215,25 @@ def get_Audio(sender_id, id_music, **extends):
     audio_name = req.get_audio(id_music)
     print(audio_name)
     chat.send_message(sender_id, "Enjoy it!!!")
-    chat.send_file_url(sender_id, f"{Configuration.APP_URL}asset/{audio_name}", filetype='audio')
+    chat.send_file_url(sender_id, Configuration.APP_URL+f"asset/{audio_name}", filetype='audio')
     query.set_action(sender_id, None)
 
-@ampalibe.command('/download')
-def download_music(sender_id, id_music, **extends):
-    """Fonction pour télecharger la musique"""
-    quick_rep = [
-    QuickReply(
-        title="MP3",
-        payload=Payload('/mp3', id_down = id_music),
-    ),
-    QuickReply(
-        title="MP4",
-        payload=Payload('/mp4', id_down = id_music)
-    ),
-    ]
-    chat.send_quick_reply(sender_id, quick_rep, 'Audio ou Vidéo?')
+# @ampalibe.command('/download')
+# def download_music(sender_id, id_music, **extends):
+#     """Fonction pour télecharger la musique"""
+#     quick_rep = [
+#     QuickReply(
+#         title="MP3",
+#         payload=Payload('/mp3', id_down = id_music),
+#     ),
+#     QuickReply(
+#         title="MP4",
+#         payload=Payload('/mp4', id_down = id_music)
+#     ),
+#     ]
+#     chat.send_quick_reply(sender_id, quick_rep, 'Audio ou Vidéo?')
 
-@ampalibe.command('/mp3')
-def download_audio(sender_id, id_down, **extends):
-    """Fonction pour télecharger la musique audio"""
-    audio_name = req.get_audio(id_down)
-    print(audio_name)
-    url = f"{Configuration.APP_URL}asset/{audio_name}"
-    response = wget.download(url)
 
-@ampalibe.command('/mp4')
-def download_video(sender_id, id_down, **extends):
-    """Fonction pour télecharger la musique audio"""
-    pass
 #-------------------------------------------------------------*Traitement de l'album*--------------------------------------------------------#
 @ampalibe.command('/details')
 def get_details(sender_id, id_album, **extends):
@@ -267,29 +245,25 @@ def get_details(sender_id, id_album, **extends):
 
     data = []
     i = 0
+    
     while i < len(chansons):
+        image = chansons[i][2]
         buttons = [
             Button(
                 type="postback",
-                title="Ecouter🎧",
+                title="Ecouter🎧/Télécharger⏳",
                 payload= Payload('/listen', id_music= str(chansons[i][0]))
             ),
             Button(
                 type="postback",
-                title="Regarder🎬",
+                title="Regarder🎬/Télécharger⏳",
                 payload= Payload('/see', id_music= str(chansons[i][0]))
-            ),
-            Button(
-                type="postback",
-                title="Télécharger⏳",
-                payload=Payload('/download', id_music= str(chansons[i][0]))
-
             )
         ]
         data.append(
            Element(
                title= str(i+1) + "- " + chansons[i][1],
-               image_url= chansons[i][2],
+               image_url= Configuration.APP_URL+f"asset/{image}",
                buttons = buttons
            )
         )
