@@ -310,7 +310,7 @@ def get_reservation(sender_id, id_res, **extends):
     
     if datetime.now() >= date_debut:
         if datetime.now() <= date_fin:
-            if nbr_billet >= 1:
+            if int(nbr_billet) >= 1:
                 print("Reservation")
 
                 chat.send_message(sender_id, "Pour pouvoir valider votre réservation, il faudrait passer au payement!!!")
