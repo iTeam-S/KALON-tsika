@@ -156,7 +156,7 @@ def get_music(sender_id, cmd, **extends):
             Button(
                 type="postback",
                 title="Télécharger⏳",
-                payload= Payload('/download', id_music= str(verif_title[i][0]))
+                payload= Payload('/download', id_music= str(musiques[i][0]))
             )
         ]
         data.append(
@@ -243,8 +243,15 @@ def download_music(sender_id, id_music, **extends):
     ]
     chat.send_quick_reply(sender_id, quick_rep, 'Audio ou Vidéo?')
 
-
-
+@ampalibe.command('/mp3')
+def download_audio(sender_id, id_down, **extends):
+    """
+        Fonction pour télecharger la musqiue audio en mp3
+    """
+    audio_name = req.get_audio(id_down)
+    print(audio_name)
+    chat.send_file_url(sender_id, Configuration.APP_URL+f"asset/{audio_name}", filetype='file')
+    query.set_action(sender_id, None)
 
 #-------------------------------------------------------------*Traitement de l'album*--------------------------------------------------------#
 @ampalibe.command('/details')
@@ -274,7 +281,7 @@ def get_details(sender_id, id_album, **extends):
             Button(
                 type="postback",
                 title="Télécharger⏳",
-                payload= Payload('/download', id_music= str(verif_title[i][0]))
+                payload= Payload('/download', id_music= str(chansons[i][0]))
             ),
         ]
         data.append(
