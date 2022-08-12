@@ -108,7 +108,7 @@ def get_album(sender_id, cmd, **extends):
     data = []
     i = 0
     while i < len(albums):
-
+        image = albums[i][2]
         button = [
             Button(
                 type="postback",
@@ -119,7 +119,7 @@ def get_album(sender_id, cmd, **extends):
         data.append(
             Element(
                 title= str(i+1)+ "- Album " + albums[i][1],
-                image_url= albums[i][2],
+                image_url= Configuration.APP_URL+f"asset\{image}",
                 buttons= button,
             )
         )
@@ -283,7 +283,7 @@ def get_information(sender_id,id_tournee, **extends):
     i = 0
 
     chat.send_message(sender_id, "Voià les informations pour réserver: ")
-    chat.send_message(sender_id, " 📑Debut de réservation: "+ str(disponibilite[i][1]) + " -📑Fin de réservation: " + str(disponibilite[i][2]) + " -📑Nombre de billet disponible" + str(disponibilite[i][3]))
+    chat.send_message(sender_id, " 📑Debut de réservation: "+ str(disponibilite[i][1]) + " -📑Fin de réservation: " + str(disponibilite[i][2]) + " -📑Nombre de billet disponible " + str(disponibilite[i][3]))
     buttons = [
         Button(
             type='postback',
@@ -296,7 +296,7 @@ def get_information(sender_id,id_tournee, **extends):
             payload=Payload('/annuler', id_res=id_tournee)
         )
     ]
-    chat.send_button(sender_id, buttons, "Voulez-vous continuer?")
+    chat.send_button(sender_id, buttons, "Voulez-vous réserver?")
 
 
 @ampalibe.command('/reserver')
@@ -316,12 +316,12 @@ def get_reservation(sender_id, id_res, **extends):
                 chat.send_message(sender_id, "Pour pouvoir valider votre réservation, il faudrait passer au payement!!!")
                 quick_rep = [
                     QuickReply(
-                        title = 'Orange',
-                        payload = Payload('/orange', id_musics = id_res)
+                        title = 'Orange Money',
+                        payload = Payload('/orange', id_payment = id_res)
                     ),
                     QuickReply(
-                        title = 'Telma',
-                        payload = Payload('/telma', id_musics = id_res)
+                        title = 'MVola',
+                        payload = Payload('/telma', id_payment = id_res)
                     )
                 ]
                 chat.send_quick_reply(sender_id, quick_rep, "Operateur")
@@ -334,7 +334,15 @@ def get_reservation(sender_id, id_res, **extends):
     else:
        chat.send_message(sender_id, "Veuillez attendre le date début de réservation" + str(date_debut))
 
+@ampalibe.command('/telma')
+def set_payement(sender_id, id_payment, **extends):
+    pass
+    chat.send_message(sender_id, "PAIMENT PAR MVola")
 
+@ampalibe.command('/orange')
+def set_payement(sender_id, id_payment, **extends):
+    pass
+    chat.send_message(sender_id, "PAIMENT PAR Orange Money")
 
 
 
