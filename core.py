@@ -48,14 +48,19 @@ def result_search(sender_id, cmd, **extends):
             buttons = [
                 Button(
                 type="postback",
-                title="Ecouter🎧/Télécharger⏳",
+                title="Ecouter🎧",
                 payload= Payload('/listen', id_music= str(verif_title[i][0]))
             ),
             Button(
                 type="postback",
-                title="Regarder🎬/Télécharger⏳",
+                title="Regarder🎬",
                 payload= Payload('/see', id_music= str(verif_title[i][0]))
             ),
+            Button(
+                type="postback",
+                title="Télécharger⏳",
+                payload= Payload('/download', id_music= str(verif_title[i][0]))
+            )
             ]
             data.append(
                 Element(
@@ -140,13 +145,18 @@ def get_music(sender_id, cmd, **extends):
         buttons = [
             Button(
                 type="postback",
-                title="Ecouter🎧/Télécharger⏳",
+                title="Ecouter🎧",
                 payload= Payload('/listen', id_music= str(musiques[i][0]))
             ),
             Button(
                 type="postback",
-                title="Regarder🎬/Télécharger⏳",
+                title="Regarder🎬",
                 payload= Payload('/see', id_music= str(musiques[i][0]))
+            ),
+            Button(
+                type="postback",
+                title="Télécharger⏳",
+                payload= Payload('/download', id_music= str(verif_title[i][0]))
             )
         ]
         data.append(
@@ -218,20 +228,22 @@ def get_Audio(sender_id, id_music, **extends):
     chat.send_file_url(sender_id, Configuration.APP_URL+f"asset/{audio_name}", filetype='audio')
     query.set_action(sender_id, None)
 
-# @ampalibe.command('/download')
-# def download_music(sender_id, id_music, **extends):
-#     """Fonction pour télecharger la musique"""
-#     quick_rep = [
-#     QuickReply(
-#         title="MP3",
-#         payload=Payload('/mp3', id_down = id_music),
-#     ),
-#     QuickReply(
-#         title="MP4",
-#         payload=Payload('/mp4', id_down = id_music)
-#     ),
-#     ]
-#     chat.send_quick_reply(sender_id, quick_rep, 'Audio ou Vidéo?')
+@ampalibe.command('/download')
+def download_music(sender_id, id_music, **extends):
+    """Fonction pour télecharger la musique"""
+    quick_rep = [
+    QuickReply(
+        title="MP3",
+        payload=Payload('/mp3', id_down = id_music),
+    ),
+    QuickReply(
+        title="MP4",
+        payload=Payload('/mp4', id_down = id_music)
+    ),
+    ]
+    chat.send_quick_reply(sender_id, quick_rep, 'Audio ou Vidéo?')
+
+
 
 
 #-------------------------------------------------------------*Traitement de l'album*--------------------------------------------------------#
@@ -251,14 +263,19 @@ def get_details(sender_id, id_album, **extends):
         buttons = [
             Button(
                 type="postback",
-                title="Ecouter🎧/Télécharger⏳",
+                title="Ecouter🎧",
                 payload= Payload('/listen', id_music= str(chansons[i][0]))
             ),
             Button(
                 type="postback",
-                title="Regarder🎬/Télécharger⏳",
+                title="Regarder🎬",
                 payload= Payload('/see', id_music= str(chansons[i][0]))
-            )
+            ),
+            Button(
+                type="postback",
+                title="Télécharger⏳",
+                payload= Payload('/download', id_music= str(verif_title[i][0]))
+            ),
         ]
         data.append(
            Element(
@@ -284,65 +301,65 @@ def get_information(sender_id,id_tournee, **extends):
 
     chat.send_message(sender_id, "Voià les informations pour réserver: ")
     chat.send_message(sender_id, " 📑Debut de réservation: "+ str(disponibilite[i][1]) + " -📑Fin de réservation: " + str(disponibilite[i][2]) + " -📑Nombre de billet disponible " + str(disponibilite[i][3]))
-    buttons = [
-        Button(
-            type='postback',
-            title='OUI',
-            payload=Payload('/reserver', id_res=id_tournee)
-        ),
-        Button(
-            type='postback',
-            title='NON',
-            payload=Payload('/annuler', id_res=id_tournee)
-        )
-    ]
-    chat.send_button(sender_id, buttons, "Voulez-vous réserver?")
+#     buttons = [
+#         Button(
+#             type='postback',
+#             title='OUI',
+#             payload=Payload('/reserver', id_res=id_tournee)
+#         ),
+#         Button(
+#             type='postback',
+#             title='NON',
+#             payload=Payload('/annuler', id_res=id_tournee)
+#         )
+#     ]
+#     chat.send_button(sender_id, buttons, "Voulez-vous réserver?")
 
 
-@ampalibe.command('/reserver')
-def get_reservation(sender_id, id_res, **extends):
-    disponibilite = req.get_reservation(id_res)
+# @ampalibe.command('/reserver')
+# def get_reservation(sender_id, id_res, **extends):
+#     disponibilite = req.get_reservation(id_res)
 
-    i = 0
-    date_debut = disponibilite[i][1]
-    date_fin = disponibilite[i][2]
-    nbr_billet = disponibilite[i][3]
+#     i = 0
+#     date_debut = disponibilite[i][1]
+#     date_fin = disponibilite[i][2]
+#     nbr_billet = disponibilite[i][3]
     
-    if datetime.now() >= date_debut:
-        if datetime.now() <= date_fin:
-            if int(nbr_billet) >= 1:
-                print("Reservation")
+#     if datetime.now() >= date_debut:
+#         if datetime.now() <= date_fin:
+#             if int(nbr_billet) >= 1:
+#                 print("Reservation")
 
-                chat.send_message(sender_id, "Pour pouvoir valider votre réservation, il faudrait passer au payement!!!")
-                quick_rep = [
-                    QuickReply(
-                        title = 'Orange Money',
-                        payload = Payload('/orange', id_payment = id_res)
-                    ),
-                    QuickReply(
-                        title = 'MVola',
-                        payload = Payload('/telma', id_payment = id_res)
-                    )
-                ]
-                chat.send_quick_reply(sender_id, quick_rep, "Operateur")
+#                 chat.send_message(sender_id, "Pour pouvoir valider votre réservation, il faudrait passer au payement!!!")
+#                 quick_rep = [
+#                     QuickReply(
+#                         title = 'Orange Money',
+#                         payload = Payload('/orange', id_payment = id_res)
+#                     ),
+#                     QuickReply(
+#                         title = 'MVola',
+#                         payload = Payload('/telma', id_payment = id_res)
+#                     )
+#                 ]
+#                 chat.send_quick_reply(sender_id, quick_rep, "Operateur")
 
-            else:
-                chat.send_message(sender_id, "Désolé, guichet fermé!!")
-        else:
-           chat.send_message(sender_id, "La date de réservation est déjà expiré, meri de votre intérêt!!")
+#             else:
+#                 chat.send_message(sender_id, "Désolé, guichet fermé!!")
+#         else:
+#            chat.send_message(sender_id, "La date de réservation est déjà expiré, meri de votre intérêt!!")
 
-    else:
-       chat.send_message(sender_id, "Veuillez attendre le date début de réservation" + str(date_debut))
+#     else:
+#        chat.send_message(sender_id, "Veuillez attendre le date début de réservation" + str(date_debut))
 
-@ampalibe.command('/telma')
-def set_payement(sender_id, id_payment, **extends):
-    pass
-    chat.send_message(sender_id, "PAIMENT PAR MVola")
+# @ampalibe.command('/telma')
+# def set_payement(sender_id, id_payment, **extends):
+#     pass
+#     chat.send_message(sender_id, "PAIMENT PAR MVola")
 
-@ampalibe.command('/orange')
-def set_payement(sender_id, id_payment, **extends):
-    pass
-    chat.send_message(sender_id, "PAIMENT PAR Orange Money")
+# @ampalibe.command('/orange')
+# def set_payement(sender_id, id_payment, **extends):
+#     pass
+#     chat.send_message(sender_id, "PAIMENT PAR Orange Money")
 
 
 
