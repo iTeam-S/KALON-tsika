@@ -246,11 +246,21 @@ def download_music(sender_id, id_music, **extends):
 @ampalibe.command('/mp3')
 def download_audio(sender_id, id_down, **extends):
     """
-        Fonction pour télecharger la musqiue audio en mp3
+        Fonction pour télecharger la musique audio en mp3
     """
     audio_name = req.get_audio(id_down)
     print(audio_name)
     chat.send_file_url(sender_id, Configuration.APP_URL+f"asset/{audio_name}", filetype='file')
+    query.set_action(sender_id, None)
+
+@ampalibe.command('/mp4')
+def download_audio(sender_id, id_down, **extends):
+    """
+        Fonction pour télecharger la musique audio en mp4
+    """
+    video_name = req.get_video(id_down)
+    print(audio_name)
+    chat.send_file_url(sender_id, Configuration.APP_URL+f"asset/{video_name}", filetype='file')
     query.set_action(sender_id, None)
 
 #-------------------------------------------------------------*Traitement de l'album*--------------------------------------------------------#
