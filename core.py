@@ -2,7 +2,7 @@ import ampalibe
 from conf import Configuration
 from ampalibe import Payload
 from requete import Requete
-from ampalibe.ui import Element, Button, QuickReply
+from ampalibe.ui import Element, Button, QuickReply, Content_type
 from datetime import datetime
 import wget
 
@@ -21,8 +21,8 @@ def main(sender_id, cmd, **extends):
     chat.send_message(sender_id,"Hello hello😍😘😘😘, bienvenu dans cette espace où je vais vous partager ma musique.")
     chat.send_message(sender_id, " Bon ambiance 💖!!!")
     persistent_menu = [
-        Button(type='postback', title='Menu principale🧾', payload='/get_started'),
-        Button(type='postback', title='Recherche musique🔎', payload='/search')
+        Button(type='postback', title='Menu principale🧾', payload=Payload('/get_started')),
+        Button(type='postback', title='Recherche musique🔎', payload=Payload('/search'))
     ]
 
     chat.persistent_menu(sender_id, persistent_menu)
@@ -86,21 +86,22 @@ def music_template(id_music):
 @ampalibe.command('/get_started')
 def get_menu(sender_id, cmd, **extends):
     quick_rep = [
-        {
-            "content_type": "text",
-            "title": 'Listes albums📀',
-            "payload": Payload("/album")
-        },
-        {
-            "content_type": "text",
-            "title": 'Liste chansons🎶',
-            "payload": Payload("/musique")
-        },
-        {
-            "content_type": "text",
-            "title": 'Prochaines tournées🎤',
-            "payload": Payload("/tournee")
-        }
+        QuickReply(
+            content_type = Content_type.text,
+            title = 'Listes albums📀',
+            payload= Payload("/album")
+        ),
+        QuickReply(
+            content_type = Content_type.text,
+            title = 'Liste chansons🎶',
+            payload= Payload("/musique")
+        ),
+        QuickReply(
+            content_type = Content_type.text,
+            title ='Prochaines tournées🎤',
+            payload= Payload("/tournee")
+        )
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               
     ]
     chat.send_quick_reply(sender_id, quick_rep, 'Que souhaitez-vous faire?')
 
